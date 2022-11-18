@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className='w-full flex flex-grow justify-between'>
+        <div className='z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 bg-black/20'>
             <div className='flex items-center'>
                 <Link href='/'>
                     <Image
@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
                     </div>
                 </nav>
             </div>
-            <div className='flex justify-center items-center mr-4'>
+            <div className='hidden lg:flex justify-center items-center mr-4'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
