@@ -40,11 +40,11 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
             <div className="relative flex items-center group">
                 <div id={`${title}-slider`} className="relative w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide">
                     {movies?.map((movie, index) => (
-                        <span onClick={() => {
+                        <span key={index} onClick={() => {
                             setModalMovie(movie);
                             setModal(true);
                         }}>
-                            <Movie key={index} movie={movie} savedMovies={savedMovies} />
+                            <Movie movie={movie} savedMovies={savedMovies} />
                         </span>
                     ))}
                 </div>
