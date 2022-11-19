@@ -12,11 +12,11 @@ export const NavData = [
         path: '/'
     },
     {
-        name: 'Recently Added',
-        path: '/'
+        name: 'Upcoming',
+        path: '/upcoming'
     },
     {
         name: 'My List',
-        path: '/'
+        path: '/account'
     }
 ]

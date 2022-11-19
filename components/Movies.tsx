@@ -18,8 +18,6 @@ const Movies: React.FC = () => {
         }
     }, [user]);
 
-    console.log("Saved movies: ", savedMovies);
-
     return (
         <>
             <MovieCarousel {...Requests.fetchTrendingMovies} savedMovies={savedMovies} />

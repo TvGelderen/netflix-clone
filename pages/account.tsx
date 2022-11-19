@@ -33,10 +33,14 @@ const Account: React.FC = () => {
     return (
         <div className="h-full w-full">
             <div 
-              className="w-full h-[500px] bg-cover bg-center"
+              className="w-full h-[70px] md:h-[320px] lg:h-[500px] 2xl:h-[680px] bg-cover bg-center"
               style={{backgroundImage: "url('https://cdn.arstechnica.net/wp-content/uploads/2022/07/netflix.jpg')"}}  
             />
-            <div className="absolute top-0 left-0 w-full h-[500px] bg-black/50" />
+            <div className="absolute top-0 left-0 w-full h-[70px] md:h-[320px] lg:h-[500px] 2xl:h-[680px] bg-black/50">
+                <div className="hidden md:block absolute bottom-[20%] ml-5 lg:ml-10 xl:ml-16 2xl:ml-24">
+                    <p className="text-4xl lg:text-5xl 2xl:text-6xl font-semibold">My Lists</p>
+                </div>
+            </div>
             <div className="p-4 mx-4">
                 <h1 className="text-2xl lg:text-3xl font-semibold pb-2">Movie List</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
