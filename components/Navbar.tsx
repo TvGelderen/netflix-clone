@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 
-import { NavData } from './Navdata'
+import { NavData } from './NavData'
 
 const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);
