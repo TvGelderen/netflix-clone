@@ -8,24 +8,25 @@ const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className='z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 bg-black/20'>
+        <div className='z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 bg-black/30'>
             <div className='flex items-center'>
                 <Link href='/'>
                     <Image
                     src='/netflix_logo.png'
                     alt='netflix logo'
                     height={70}
-                    width={200}
+                    width={120}
+                    className="m-5"
                     />
                 </Link>
                 {/* Regular navbar for large screen */}
-                <nav className='hidden lg:flex pl-6 text-lg'>
+                <nav className='hidden lg:flex pl-6'>
                     <div>
                         {NavData.map(item => (
                             <Link 
                               key={item.name} 
                               href={item.path}
-                              className="text-xl px-5 hover:text-gray-300 tracking-wider"
+                              className="text-lg px-5 hover:text-gray-300 tracking-wide"
                             >
                                 {item.name}
                             </Link>
@@ -37,6 +38,14 @@ const Navbar: React.FC = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
+                <div className='text-lg'>
+                    <button className='mx-4 py-1'>
+                        <p>Register</p>
+                    </button>
+                    <button className='px-2 py-1 rounded bg-[red] '>
+                        <p>Sign In</p>
+                    </button>
+                </div>
             </div>
 
             <div className='z-[10] lg:hidden flex items-center mr-5 cursor-pointer' onClick={() => setOpen(!open)}>
