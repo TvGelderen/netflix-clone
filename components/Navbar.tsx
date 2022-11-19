@@ -1,11 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
 
 import { NavData } from './Navdata'
 
 const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);
+
+    const { user, logOut } = useAuthContext();
+
+    const router = useRouter();
 
     return (
         <div className='z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 bg-black/30'>
@@ -38,14 +44,23 @@ const Navbar: React.FC = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-                <div className='text-lg'>
-                    <button className='mx-4 py-1'>
-                        <p>Register</p>
-                    </button>
-                    <button className='px-2 py-1 rounded bg-[red] '>
-                        <p>Sign In</p>
-                    </button>
-                </div>
+                {user 
+                  ? <div className='text-lg'>
+                        <button className='mx-4 py-1' onClick={logOut}>
+                            <p>Sign Out</p>
+                        </button>
+                        <button className='px-2 py-1 rounded bg-[red]'>
+                            <p>Account</p>
+                        </button>
+                    </div>
+                  : <div className='text-lg'>
+                        <button className='mx-4 py-1'>
+                            <p>Register</p>
+                        </button>
+                        <button className='px-2 py-1 rounded bg-[red]' onClick={() => router.push('/sign-in')}>
+                            <p>Sign In</p>
+                        </button>
+                    </div>}
             </div>
 
             <div className='z-[10] lg:hidden flex items-center mr-5 cursor-pointer' onClick={() => setOpen(!open)}>

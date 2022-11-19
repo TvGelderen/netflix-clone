@@ -3,34 +3,42 @@ import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut, onAut
 import { auth } from '../firebase'
 
 type authContextType = {
-    user: boolean;
+    user: {} | null;
     googleSignIn: () => void;
-    logout: () => void;
+    logOut: () => void;
 }
 
 const authContextDefaultValues: authContextType = {
-    user: false,
+    user: null,
     googleSignIn: () => {},
-    logout: () => {},
+    logOut: () => {},
 };
 
 const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
 
 export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
-    const [user, setUser] = useState<boolean>(false);
+    const [user, setUser] = useState<{} | null>(null);
 
-    const logout = () => setUser(false);
+    const logOut = () => signOut(auth);
 
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider);
     }
 
+    useEffect(() => {
+        const updateUser = onAuthStateChanged(auth, currentUser => setUser(currentUser));
+
+        console.log(user);
+
+        return () => updateUser();
+    }, [])
+
     const value = {
         user,
         googleSignIn,
-        logout
+        logOut
     }
 
     return (

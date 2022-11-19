@@ -14,10 +14,7 @@ const Hero: React.FC = () => {
           .then(response => setMovies(response.data.results))
           .catch(error => console.error(error));
     }, []);
-
-    console.log(movies)
-    console.log(movie)
-
+    
     return (
         <div className="relative w-full h-[400px] sm:h-[450px] lg:h-[650px] 2xl:h-[850px] mb-[-50px]">
             <div className="absolute w-full h-[400px] sm:h-[450px] lg:h-[650px] 2xl:h-[850px] bg-gradient-to-r from-black" />
