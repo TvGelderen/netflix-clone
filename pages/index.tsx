@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Hero from '../components/Hero'
-import MovieCarousel from '../components/MovieCarousel'
-
-import Requests from '../utils/Requests'
+import Movies from '../components/Movies'
 
 export default function Home() {
   return (
@@ -15,21 +13,7 @@ export default function Home() {
 
       <Hero />
 
-      <MovieCarousel {...Requests.fetchTrendingMovies} />
-      <MovieCarousel {...Requests.fetchTopRatedMovies} />
-      <MovieCarousel {...Requests.fetchActionMovies} />
-      <MovieCarousel {...Requests.fetchAdventureMovies} />
-      <MovieCarousel {...Requests.fetchAnimationMovies} />
-      <MovieCarousel {...Requests.fetchComedyMovies} />
-      <MovieCarousel {...Requests.fetchDocumentaryMovies} />
-      <MovieCarousel {...Requests.fetchDramaMovies} />
-      <MovieCarousel {...Requests.fetchHistoryMovies} />
-      <MovieCarousel {...Requests.fetchHorrorMovies} />
-      <MovieCarousel {...Requests.fetchRomanceMovies} />
-      <MovieCarousel {...Requests.fetchScienceFictionMovies} />
-      <MovieCarousel {...Requests.fetchThrillerMovies} />
-      <MovieCarousel {...Requests.fetchWarMovies} />
-      <MovieCarousel {...Requests.fetchWesternMovies} />
+      <Movies />
     </div>
   )
 }

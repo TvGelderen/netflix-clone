@@ -1,15 +1,15 @@
 import React, { useContext, createContext, ReactNode, useState, useEffect } from 'react';
-import { GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { User, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 type authContextType = {
-    user: {} | null;
+    user: User | null;
     register: (email:string, password:string) => void;
     emailSignIn: (email:string, password:string) => void;
     googleSignIn: () => void;
     logOut: () => void;
-}
+};
 
 const authContextDefaultValues: authContextType = {
     user: null,
@@ -23,17 +23,17 @@ const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
 
 export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
-    const [user, setUser] = useState<{} | null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
     const register = (email:string, password:string) => {
-        createUserWithEmailAndPassword(auth, email, password);
+        const promise = createUserWithEmailAndPassword(auth, email, password);
 
         setDoc(doc(db, 'users', email), {
             savedMovies: [],
             savedShows: []
         }, { merge: true });
 
-        return signInWithEmailAndPassword(auth, email, password);
+        promise.then(() => signInWithEmailAndPassword(auth, email, password));
     };
 
     const emailSignIn = (email:string, password:string) => {

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Image from "next/image";
+import axios from "axios"; 
+import Movie from "./Movie";
 
 type props = {
     title: string;
     url: string;
+    savedMovies: any[] | undefined
 }
 
-const MovieCarousel: React.FC<props> = ({ title, url }: props) => {
-    const [like, setLike] = useState<boolean>(false);
+const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
     const [movies, setMovies] = useState<any[]>();
 
     useEffect(() => {
@@ -38,27 +38,7 @@ const MovieCarousel: React.FC<props> = ({ title, url }: props) => {
             <div className="relative flex items-center group">
                 <div id={`${title}-slider`} className="relative w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide px-12">
                     {movies?.map((movie, index) => (
-                        <div key={index} className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] xl:w-[320px] inline-block cursor-pointer relative mx-2 rounded">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
-                              alt={movie?.title}
-                              width={2560}
-                              height={1440}
-                              className="w-full h-full object-cover rounded"
-                            />
-                            <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center opacity-0 hover:opacity-100 hover:bg-black/70 px-2 rounded">
-                                <div className="absolute top-1 left-3">
-                                    {like 
-                                      ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                                        </svg>
-                                      : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                                        </svg>}
-                                </div>
-                                <p className="text-gray-300 break-words">{movie?.title}</p>
-                            </div>
-                        </div>
+                        <Movie key={index} movie={movie} savedMovies={savedMovies} />
                     ))}
                 </div>
 
