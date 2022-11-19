@@ -2,19 +2,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 
 import { NavData } from './NavData'
 
 const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const [solid, setSolid] = useState(false);
 
     const { user, logOut } = useAuthContext();
 
     const router = useRouter();
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 40)
+                setSolid(true);
+            else    
+                setSolid(false);    
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <div className='z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300'>
+        <div className={`z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 ${solid ? 'bg-black/90' : ''}`}>
             <div className='flex items-center'>
                 <Link href='/'>
                     <Image
