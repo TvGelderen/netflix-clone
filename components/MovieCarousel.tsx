@@ -121,14 +121,14 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
                             <p className="mt-3">
                                 <span className="text-gray-500">Genres: </span>
                                 {selectedMovieGenres?.map((genre, index) => (
-                                    <span>
+                                    <span key={index}>
                                         {genre.name}{index !== selectedMovieGenres.length - 1 && <span>, </span>}
                                     </span>))}
                             </p>
                             <p className="mt-3">
                                 <span className="text-gray-500">Cast: </span>
                                 {selectedMovieCast?.slice(0, 4).map((actor, index) => 
-                                    <span>
+                                    <span key={index}>
                                         {actor.name}{index < 3 && <span>, </span>}
                                     </span>)}
                             </p>
