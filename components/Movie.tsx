@@ -47,7 +47,7 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
     }, [savedMovies])
 
     return (
-        <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] xl:w-[320px] inline-block cursor-pointer relative mx-2 rounded">
+        <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] inline-block cursor-pointer relative mx-2 rounded">
             <Image
                 src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
                 alt={movie?.title}
@@ -56,7 +56,10 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
                 className="w-full h-full object-cover rounded"
             />
             <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center opacity-0 hover:opacity-100 hover:bg-black/70 px-2 rounded">
-                <div className="absolute top-1 left-3" onClick={saveMovie}>
+                <div className="absolute top-1 left-3" onClick={event => {
+                  event.stopPropagation();
+                  saveMovie();
+                }}>
                     {like 
                         ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-6 h-6">
                             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />

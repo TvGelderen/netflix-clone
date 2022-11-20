@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import axios from "axios"; 
 import Movie from "./Movie";
+import Requests, { getCast } from "../utils/Requests";
 
 type props = {
     title: string;
@@ -10,13 +11,21 @@ type props = {
 
 const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
     const [movies, setMovies] = useState<any[]>();
+    const [genres, setGenres] = useState<any[]>();
     const [modal, setModal] = useState<boolean>(false);
-    const [modalMovie, setModalMovie] = useState<any>();
+    const [selectedMovie, setSelectedMovie] = useState<any>();
+    const [selectedMovieGenres, setSelectedMovieGenres] = useState<any[]>();
+    const [selectedMovieCast, setSelectedMovieCast] = useState<any[]>();
+    const [trailerKey, setTrailerKey] = useState<string>();
 
     useEffect(() => {
         axios
           .get(url)
           .then(response => setMovies(response.data.results))
+          .catch(error => console.error(error));
+
+        axios.get(Requests.fetchMovieGenres.url)
+          .then(response => setGenres(response.data.genres))
           .catch(error => console.error(error));
     }, [url]);
 
@@ -34,14 +43,36 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
             slider.scrollLeft = slider.scrollLeft + 800;
     };
 
+    useEffect(() => {
+        const url = `https://api.themoviedb.org/3/movie/${selectedMovie?.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&append_to_response=videos`;
+
+        if (selectedMovie?.id !== undefined)
+        {
+            axios
+              .get(url)
+              .then(response => setTrailerKey(response.data.videos.results.find((video:any) => video.name.toLowerCase().includes("trailer")).key))
+              .catch(error => console.error(error));
+
+            axios
+              .get(getCast(selectedMovie.id))
+              .then(response => setSelectedMovieCast(response.data.cast))
+              .catch(error => console.error(error));
+        }
+
+        // get all genres applied to current selected movie
+        setSelectedMovieGenres(genres?.filter(genre => selectedMovie?.genre_ids?.includes(genre.id)));
+
+        console.log(selectedMovie)
+    }, [selectedMovie]);
+
     return (
-        <div className="mb-6 px-12">
-            <h2 className="relative font-semibold text-xl md:text-2xl pl-2 pb-2 text-gray-300">{title}</h2>
+        <div className="mb-6">
+            <h2 className="relative font-semibold text-xl md:text-2xl pl-6 md:pl-10 lg:pl-14 pb-2 text-gray-300">{title}</h2>
             <div className="relative flex items-center group">
-                <div id={`${title}-slider`} className="relative w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide">
+                <div id={`${title}-slider`} className="relative w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide px-4 md:px-8 lg:px-12">
                     {movies?.map((movie, index) => (
                         <span key={index} onClick={() => {
-                            setModalMovie(movie);
+                            setSelectedMovie(movie);
                             setModal(true);
                         }}>
                             <Movie movie={movie} savedMovies={savedMovies} />
@@ -66,10 +97,46 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
             </div>
 
             {modal && 
-                <div className="relative flex justify-center items-center" onClick={() => setModal(false)}>
+                <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
                     <div className="z-10 fixed top-0 left-0 right-0 bottom-0 bg-black/70" />
-                    <div className="z-10 fixed top-[10%] w-full h-full max-w-[850px] max-h-[700px] m-4 bg-black/90">
-                        <h1 className="text-4xl font-bold">{modalMovie.title}</h1>
+                    <div className="z-10 fixed w-[100%] h-[70%] max-h-[600px] md:w-[90%] md:h-[80vw] max-w-[1080px] md:max-h-[850px] bg-[#101010] rounded-lg">
+                        <div className="absolute top-3 right-3 cursor-pointer p-2 bg-[#101010]/90 rounded-full" onClick={() => setModal(false)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                        <iframe 
+                          src={`https://www.youtube.com/embed/${trailerKey}`} 
+                          title="Trailer" 
+                          allowFullScreen
+                          className="w-full h-[50vw] max-h-[610px] rounded-t-xl"
+                        />
+                        <div className="p-4 text-sm md:text-base w-full sm:w-[75%] lg:w-[60%]">
+                            <p className="text-xs md:text-sm text-gray-300">
+                                Released: {selectedMovie?.release_date}
+                            </p>
+                            <p className="mt-5">
+                                {selectedMovie?.overview}
+                            </p>
+                            <p className="mt-3">
+                                <span className="text-gray-500">Genres: </span>
+                                {selectedMovieGenres?.map((genre, index) => (
+                                    <span>
+                                        {genre.name}{index !== selectedMovieGenres.length - 1 && <span>, </span>}
+                                    </span>))}
+                            </p>
+                            <p className="mt-3">
+                                <span className="text-gray-500">Cast: </span>
+                                {selectedMovieCast?.slice(0, 4).map((actor, index) => 
+                                    <span>
+                                        {actor.name}{index < 3 && <span>, </span>}
+                                    </span>)}
+                            </p>
+                            <p className="mt-3">
+                                <span className="text-gray-500">Original language: </span>
+                                {selectedMovie.original_language}
+                            </p>
+                        </div>
                     </div>
                 </div>}
         </div>
