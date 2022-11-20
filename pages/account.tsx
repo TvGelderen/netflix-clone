@@ -42,7 +42,7 @@ const Account: React.FC = () => {
                 </div>
             </div>
             <div className="p-4 mx-4">
-                <h1 className="text-2xl lg:text-3xl font-semibold pb-2">Movie List</h1>
+                <h1 className="text-2xl lg:text-3xl font-semibold pb-2">Saved Movies</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                     {savedMovies?.map((movie, index) => (
                         <div key={index} className="cursor-pointer relative rounded">
