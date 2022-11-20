@@ -99,7 +99,7 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
             {modal && 
                 <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
                     <div className="z-10 fixed top-0 left-0 right-0 bottom-0 bg-black/70" />
-                    <div className="z-10 fixed w-[100%] h-[70%] max-h-[600px] md:w-[90%] md:h-[80vw] max-w-[1080px] md:max-h-[850px] bg-[#101010] rounded-lg">
+                    <div className="z-10 fixed w-[100%] h-[70%] max-h-[650px] md:w-[90%] md:h-[92vw] max-w-[1080px] md:max-h-[950px] bg-[#101010] rounded-lg">
                         <div className="absolute top-3 right-3 cursor-pointer p-2 bg-[#101010]/90 rounded-full" onClick={() => setModal(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                                 <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
