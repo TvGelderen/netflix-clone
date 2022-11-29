@@ -54,6 +54,8 @@ const Plans: React.FC = () => {
                     .then(() => {
                         setSubscriptions(oldArray => [...oldArray, {productData, priceData}])
                     });
+            }, function (error: any) {
+                console.error(error)
             });
         })
 
