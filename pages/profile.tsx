@@ -138,7 +138,7 @@ const Profile: React.FC = () => {
                     </div>
                     <div className='col-span-5'>
                         <p className='text-2xl font-semibold pb-1 border-b-2 border-[#202020]'>Subscription Plans</p>
-                        <p className='text-[#aaaaaa] py-2'>Renewal date: (dd/mm/yyyy)</p>
+                        {currentSubscription && <p className='text-[#aaaaaa] py-2'>Renewal date: {(new Date(currentSubscription.current_period_end * 1000)).toLocaleDateString()}</p>}
 
                         <div>
                             {sortedSubscriptions.map((subscription, index) => {
