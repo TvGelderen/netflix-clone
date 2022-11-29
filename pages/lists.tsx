@@ -5,7 +5,7 @@ import { db } from "../firebase";
 import { doc, onSnapshot, updateDoc  } from 'firebase/firestore';
 import Image from "next/image";
 
-const Account: React.FC = () => {
+const Lists: React.FC = () => {
     const [savedMovies, setSavedMovies] = useState<any[]>();
     const { user } = useAuthContext();
     const router = useRouter();
@@ -31,7 +31,7 @@ const Account: React.FC = () => {
     };
 
     return (
-        <div className="h-full w-full">
+        <div className="min-h-screen w-full">
             <div 
               className="w-full h-[70px] md:h-[320px] lg:h-[500px] 2xl:h-[680px] bg-cover bg-center"
               style={{backgroundImage: "url('https://cdn.arstechnica.net/wp-content/uploads/2022/07/netflix.jpg')"}}  
@@ -69,4 +69,4 @@ const Account: React.FC = () => {
     );
 }
 
-export default Account;
+export default Lists;

@@ -1,7 +1,6 @@
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useState } from "react";
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -20,7 +19,7 @@ const SignIn: React.FC = () => {
                   alt=''
                   width={200}
                   height={120}
-                  className='w-[150px] md:w-[180px] lg:w-[200px] md:m-2'
+                  className='w-[150px] md:w-[180px] lg:w-[200px] h-auto md:m-2'
                 />
             </div>
             <div className="absolute top-6 right-12">
@@ -34,7 +33,7 @@ const SignIn: React.FC = () => {
 
                 <div className="w-full max-w-[600px] m-auto pt-4 flex">
                     <input type='email' placeholder='Email Address' className="py-3 md:py-4 px-2 w-4/6 text-black" onChange={event => setEmail(event.target.value)} />
-                    <button type='submit' className="md:text-xl w-2/6 py-2 px-3 md:py-4 md:px-6 bg-[#e50914] border-[#e50914] cursor-pointer" onClick={() => router.push({ pathname: '/login', query: { email: email }})}>Get Started</button>
+                    <button type='submit' className="md:text-xl w-2/6 py-2 px-3 md:py-4 md:px-6 bg-[#e50914] border-[#e50914] cursor-pointer" onClick={() => router.push({ pathname: '/register', query: { email: email }})}>Get Started</button>
                 </div>
             </div>
         </div>

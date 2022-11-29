@@ -2,17 +2,36 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useAuthContext } from '../context/AuthContext';
+import { FirebaseError } from 'firebase/app'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<FirebaseError>();
+
+    const { user, signIn } = useAuthContext();
 
     const router = useRouter();
+
+    const handleSubmit = () => {
+        signIn(email, password)?.catch(error => {
+            console.error(error.code);
+            setError(error.code);
+        });
+    }
+
+    console.log(error)
 
     useEffect(() => {
         const emailParam = router.query.email;
         setEmail(emailParam !== undefined && !(emailParam instanceof Array) ? emailParam : '');
     }, []);
+
+    useEffect(() => {
+        if (user)
+            router.push('/');
+    }, [user]);
     
     return (
         <div 
@@ -26,12 +45,14 @@ const Login: React.FC = () => {
                   alt=''
                   width={200}
                   height={120}
-                  className='w-[150px] md:w-[180px] lg:w-[200px] md:m-2'
+                  priority
+                  className='w-[150px] md:w-[180px] lg:w-[200px] h-auto md:m-2'
                 />
             </div>
 
             <div className="fixed top-0 mt-[100px] w-[90%] md:max-w-[500px] m-auto md:p-16 rounded md:bg-black/70">
                 <h3 className="text-4xl font-semibold pb-6">Sign In</h3>
+                {error && <p className='text-[red] pl-1'>Wrong password or username.</p>}
                 <form className="w-full flex flex-col">
                     <input 
                         onChange={event => setEmail(event.target.value)}
@@ -48,29 +69,31 @@ const Login: React.FC = () => {
                         placeholder="Password" 
                         autoComplete="current-password" 
                     />
-
-                    <input 
-                        type="submit"
-                        value="Sign in"
-                        className="py-3 mt-8 font-semibold rounded bg-[#e50914] border-[#e50914] "
-                    />
-
-                    <div className="flex justify-between items-center mt-3">
-                        <div className="flex">
-                            <input 
-                            type="checkbox"
-                            className=''
-                            />
-                            <p className="text-[#a7a7a7]">&nbsp;Remember me</p>
-                        </div>
-                        <div>
-                            <p className="text-[#a7a7a7]">Need help?</p>
-                        </div>
-                    </div>
                 </form>
 
+                <button 
+                    type="button"
+                    className="w-full py-3 mt-8 text-lg font-semibold rounded bg-[#e50914] border-[#e50914]"
+                    onClick={handleSubmit}
+                >
+                    Sign In
+                </button>
+
+                <div className="flex justify-between items-center mt-3">
+                    <div className="flex">
+                        <input 
+                        type="checkbox"
+                        className=''
+                        />
+                        <p className="text-[#a7a7a7]">&nbsp;Remember me</p>
+                    </div>
+                    <div>
+                        <p className="text-[#a7a7a7]">Need help?</p>
+                    </div>
+                </div>
+
                 <div className="flex mt-24">
-                    <p className="text-[#a7a7a7] text-lg">New to Netflix? &nbsp;</p>
+                    <p className="text-[#a7a7a7] text-lg">New to Netflix?&nbsp;</p>
                     <Link href='/register' className='text-lg font-semibold'>Sign up now.</Link>
                 </div>
             </div>

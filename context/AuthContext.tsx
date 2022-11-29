@@ -1,47 +1,44 @@
 import React, { useContext, createContext, ReactNode, useState, useEffect } from 'react';
-import { User, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { User, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 type authContextType = {
     user: User | null;
-    register: (email:string, password:string) => void;
-    emailSignIn: (email:string, password:string) => void;
+    register: (email: string, password: string) => void;
+    signIn: (email: string, password: string) => Promise<UserCredential> | null;
     logOut: () => void;
 };
 
 const authContextDefaultValues: authContextType = {
     user: null,
     register: (email, password) => {},
-    emailSignIn: () => {},
+    signIn: () => { return null },
     logOut: () => {},
 };
 
 const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
-
 export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useState<User | null>(null);
 
-    const register = (email:string, password:string) => {
-        const promise = createUserWithEmailAndPassword(auth, email, password);
-
-        setDoc(doc(db, 'users', email), {
-            savedMovies: [],
-            savedShows: []
-        }, { merge: true });
-
-        promise.then(() => signInWithEmailAndPassword(auth, email, password));
+    const register = (email: string, password: string) => {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(() => signInWithEmailAndPassword(auth, email, password))
+          .then((response) => {
+            console.log(response.user)
+            setDoc(doc(db, 'customers', response.user.uid), {
+                savedMovies: []
+            }, { merge: true });
+          });
     };
 
-    const emailSignIn = (email:string, password:string) => {
+    const signIn = (email: string, password: string) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
     useEffect(() => {
         const updateUser = onAuthStateChanged(auth, currentUser => setUser(currentUser));
-
-        console.log(user);
 
         return () => updateUser();
     }, []);
@@ -51,7 +48,7 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     const value = {
         user,
         register,
-        emailSignIn,
+        signIn,
         logOut
     };
 
