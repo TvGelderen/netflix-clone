@@ -59,23 +59,15 @@ const Navbar: React.FC = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-                {user 
-                  ? <div className='text-lg'>
-                        <button className='mx-4 py-1' onClick={logOut}>
-                            <p>Sign Out</p>
-                        </button>
-                        <button className='px-2 py-1 rounded bg-[red]' onClick={() => router.push('/account')}>
-                            <p>Account</p>
-                        </button>
-                    </div>
-                  : <div className='text-lg'>
-                        <button className='mx-4 py-1' onClick={() => router.push('/register')}>
-                            <p>Register</p>
-                        </button>
-                        <button className='px-2 py-1 rounded bg-[red]' onClick={() => router.push('/sign-in')}>
-                            <p>Sign In</p>
-                        </button>
-                    </div>}
+                <div className='cursor-pointer' onClick={() => router.push('/account')}>
+                    <Image 
+                      src='/netflix-avatar.png'
+                      alt='avatar'
+                      width={60}
+                      height={60}
+                      className='w-12 ml-4'
+                    />
+                </div>
             </div>
 
             <div className='lg:hidden flex items-center mr-5 cursor-pointer' onClick={() => setOpen(!open)}>

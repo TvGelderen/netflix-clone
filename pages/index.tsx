@@ -1,8 +1,14 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import Hero from '../components/Hero'
 import Movies from '../components/Movies'
+import SignIn from '../components/SignIn';
+import { useAuthContext } from '../context/AuthContext'
 
 export default function Home() {
+  const { user } = useAuthContext();
+  const router = useRouter();
+
   return (
     <div>
       <Head>
@@ -11,9 +17,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Hero />
+      {user ? (
+        <>
+          <Hero />
 
-      <Movies />
+          <Movies />
+        </>
+      ) : (
+        <SignIn />
+      )}
     </div>
   )
 }

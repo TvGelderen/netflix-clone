@@ -1,5 +1,5 @@
 import React, { useContext, createContext, ReactNode, useState, useEffect } from 'react';
-import { User, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { User, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -7,7 +7,6 @@ type authContextType = {
     user: User | null;
     register: (email:string, password:string) => void;
     emailSignIn: (email:string, password:string) => void;
-    googleSignIn: () => void;
     logOut: () => void;
 };
 
@@ -15,7 +14,6 @@ const authContextDefaultValues: authContextType = {
     user: null,
     register: (email, password) => {},
     emailSignIn: () => {},
-    googleSignIn: () => {},
     logOut: () => {},
 };
 
@@ -40,11 +38,6 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const googleSignIn = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithRedirect(auth, provider);
-    };
-
     useEffect(() => {
         const updateUser = onAuthStateChanged(auth, currentUser => setUser(currentUser));
 
@@ -59,7 +52,6 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
         user,
         register,
         emailSignIn,
-        googleSignIn,
         logOut
     };
 
