@@ -61,8 +61,6 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
 
         // get all genres applied to current selected movie
         setSelectedMovieGenres(genres?.filter(genre => selectedMovie?.genre_ids?.includes(genre.id)));
-
-        console.log(selectedMovie)
     }, [selectedMovie]);
 
     return (
