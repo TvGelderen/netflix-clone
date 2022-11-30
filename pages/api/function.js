@@ -10,24 +10,24 @@ const lazyFirestore = async () => {
     if (!_firestore) {
         const baseDir = await fsp.mkdtemp((await fsp.realpath(os.tmpdir())) + path.sep)
         const fileName = path.join(baseDir, "credentials.json")
-        const buffer = Buffer.from(process.env.GOOGLE_CREDENTIALS, "base64")
+        const buffer = Buffer.from(process.env.NEXT_PUBLIC_GOOGLE_CREDENTIALS, "base64")
         await fsp.writeFile(fileName, buffer)
     
-        process.env.NEXT_PUBLIC_GOOGLE_CREDENTIALS = fileName
+        process.env["GOOGLE_APPLICATION_CREDENTIALS"] = fileName
     
         _firestore = new Firestore()
       }
     
       return _firestore
-    }
+}
     
-    export default async (req, res) => {
-      const firestore = await lazyFirestore()
-    
-      const increment = FieldValue.increment(1)
-      const documentRef = firestore.collection("v1").doc("default")
-    
-      await documentRef.update({ counter: increment })
-    
-      res.status(200).json({})
+export default async (req, res) => {
+    const firestore = await lazyFirestore()
+
+    const increment = FieldValue.increment(1)
+    const documentRef = firestore.collection("v1").doc("default")
+
+    await documentRef.update({ counter: increment })
+
+    res.status(200).json({})
 }
