@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, addDoc, getDoc, deleteDoc, query, where } from "firebase/firestore";
 import Image from "next/image";
 import { useEffect } from "react";
 
@@ -9,42 +9,43 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
     const [like, setLike] = useState<boolean>(false);
     const { user } = useAuthContext();
 
-    const ref = doc(db, 'users', `${user?.email}`);
-
     const saveMovie = async () => {
-        if (user)
+        if (user && savedMovies !== undefined)
         {
             setLike(!like);
 
-            if (savedMovies.find((item: { id: number; }) => item.id === movie.id))
-            {
-                const newArray = savedMovies.filter((item: { id: number }) => item.id !== movie.id)
+            const userRef = doc(db, "customers", user.uid);
+            const savedMoviesRef = collection(userRef, "savedMovies")
 
-                await updateDoc(ref, {
-                    savedMovies: newArray,
+            if (savedMovies?.find((item: { id: number; }) => item.id === movie.id))
+            {
+                const movieQuery = query(savedMoviesRef, where("id", "==", movie.id))
+
+                const unsubscribe = onSnapshot(movieQuery, snapshot => {
+                    snapshot.forEach(document => {
+                        deleteDoc(document.ref);
+                    });
                 });
+
+                return () => unsubscribe();
             }
             else
-            {
-                await updateDoc(ref, {
-                    savedMovies: arrayUnion({
-                        id: movie.id,
-                        title: movie.title,
-                        img: movie.backdrop_path
-                    })
+                await addDoc(savedMoviesRef, {
+                    id: movie.id,
+                    title: movie.title,
+                    img: movie.backdrop_path
                 });
-            }
         }
         else
-        {
             alert('Please log in to save a movie.');
-        }
     }
 
     useEffect(() => {
-        if (savedMovies?.find((item: { id: number; }) => item.id === movie.id))
+        if (savedMovies !== undefined && savedMovies?.find((item: { id: number; }) => item.id === movie.id))
             setLike(true);
-    }, [savedMovies])
+        
+        console.log(savedMovies)
+    }, [savedMovies]);
 
     return (
         <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] inline-block cursor-pointer relative mx-2 rounded">

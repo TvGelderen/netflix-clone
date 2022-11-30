@@ -14,9 +14,7 @@ const Register: React.FC = () => {
 
     const router = useRouter();
 
-    const handleSubmit = () => {
-        event?.preventDefault();
-
+    const handleSubmit = async () => {
         register(email, password);
     }
 

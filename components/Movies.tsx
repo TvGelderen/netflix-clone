@@ -3,18 +3,28 @@ import { useAuthContext } from '../context/AuthContext';
 import Requests from "../utils/Requests";
 import MovieCarousel from "./MovieCarousel";
 import { db } from "../firebase";
-import { doc, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 const Movies: React.FC = () => {
-    const [savedMovies, setSavedMovies] = useState<any[]>();
+    const [savedMovies, setSavedMovies] = useState<any[]>([]);
 
     const { user } = useAuthContext();
 
     useEffect(() => {
         if (user)
         {
-            const ref = doc(db, 'users', `${user?.email}`);
-            onSnapshot(ref, doc => setSavedMovies(doc.data()?.savedMovies));
+            setSavedMovies([]);
+            
+            const userRef = doc(db, "customers", user?.uid);
+            const savedMoviesRef = collection(userRef, "savedMovies")
+            const unsubscribe = onSnapshot(savedMoviesRef, snapshot => {
+                snapshot.forEach(movie => {
+                    getDoc(doc(savedMoviesRef, movie.id))
+                      .then(response => setSavedMovies(oldList => [...oldList, response.data()]))
+                })
+            })
+
+            return () => unsubscribe();
         }
     }, [user]);
 

@@ -1,7 +1,7 @@
 import React, { useContext, createContext, ReactNode, useState, useEffect } from 'react';
 import { User, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 
 type authContextType = {
     user: User | null;
@@ -12,7 +12,7 @@ type authContextType = {
 
 const authContextDefaultValues: authContextType = {
     user: null,
-    register: (email, password) => {},
+    register: () => { return null },
     signIn: () => { return null },
     logOut: () => {},
 };
@@ -22,15 +22,9 @@ const AuthContext = createContext<authContextType>(authContextDefaultValues);
 export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useState<User | null>(null);
 
-    const register = (email: string, password: string) => {
-        createUserWithEmailAndPassword(auth, email, password)
-          .then(() => signInWithEmailAndPassword(auth, email, password))
-          .then((response) => {
-            console.log(response.user)
-            setDoc(doc(db, 'customers', response.user.uid), {
-                savedMovies: []
-            }, { merge: true });
-          });
+    const register = async (email: string, password: string) => {
+        return await createUserWithEmailAndPassword(auth, email, password)
+          .then(() => signInWithEmailAndPassword(auth, email, password));
     };
 
     const signIn = (email: string, password: string) => {

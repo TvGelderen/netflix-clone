@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import { addDoc, collection, doc, DocumentData, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { useAuthContext } from '../context/AuthContext';
 import { loadStripe } from '@stripe/stripe-js'
+import { useRouter } from 'next/router';
 
 type PriceType = {
     priceId: string;
@@ -26,6 +27,7 @@ const Profile: React.FC = () => {
     const [currentSubscription, setCurrentSubscription] = useState<SubscriptionType>();
     
     const { user, logOut } = useAuthContext();
+    const router = useRouter();
 
     const asPrice = (amount: string) => {
         const str = amount.toString();
@@ -83,6 +85,8 @@ const Profile: React.FC = () => {
                     });
                 });
         }
+        else
+            router.push('/');
     }, [user]);
 
     // Get subscription plans
@@ -123,7 +127,7 @@ const Profile: React.FC = () => {
     const sortedSubscriptions = subscriptions.sort((a, b) => a.priceData[0]?.priceData.unit_amount - b.priceData[0]?.priceData.unit_amount);
 
     return (
-        <div className="w-full h-screen flex justify-center pt-[90px]">
+        <div className="w-full min-h-screen flex justify-center py-[90px]">
             <div className='w-[95%] max-w-[700px] m-auto'>
                 <h1 className='text-4xl md:text-5xl lg:text-6xl font-semibold text-left pb-2 border-b-2 border-[#202020]'>Edit Profile</h1>
                 <div className='grid grid-cols-6 py-4 px-2'>
