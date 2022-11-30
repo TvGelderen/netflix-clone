@@ -13,7 +13,7 @@ const lazyFirestore = async () => {
         const buffer = Buffer.from(process.env.GOOGLE_CREDENTIALS, "base64")
         await fsp.writeFile(fileName, buffer)
     
-        process.env["GOOGLE_APPLICATION_CREDENTIALS"] = fileName
+        process.env.NEXT_PUBLIC_GOOGLE_CREDENTIALS = fileName
     
         _firestore = new Firestore()
       }
