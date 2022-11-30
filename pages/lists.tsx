@@ -8,29 +8,32 @@ import Head from "next/head";
 
 const Lists: React.FC = () => {
     const [savedMovies, setSavedMovies] = useState<any[]>([]);
-    const { user } = useAuthContext();
+    const { user, loading } = useAuthContext();
     const router = useRouter();
     
     useEffect(() => {
-        if (user)
+        if (!loading)
         {
-            const userRef = doc(db, "customers", user.uid);
-            const savedMoviesRef = collection(userRef, "savedMovies");
+            if (user !== null)
+            {
+                const userRef = doc(db, "customers", user.uid);
+                const savedMoviesRef = collection(userRef, "savedMovies");
 
-            const unsubscribe = onSnapshot(savedMoviesRef, snapshot => {
-                setSavedMovies([]);
-                
-                snapshot.forEach(movie => {
-                    getDoc(doc(savedMoviesRef, movie.id))
-                      .then(response => setSavedMovies(oldList => [...oldList, response.data()]))
+                const unsubscribe = onSnapshot(savedMoviesRef, snapshot => {
+                    setSavedMovies([]);
+                    
+                    snapshot.forEach(movie => {
+                        getDoc(doc(savedMoviesRef, movie.id))
+                        .then(response => setSavedMovies(oldList => [...oldList, response.data()]))
+                    })
                 })
-            })
 
-            return () => unsubscribe();
+                return () => unsubscribe();
+            }
+            else
+                router.push('/');
         }
-        else
-            router.push('/')
-    }, []);
+    }, [user, router, loading]);
 
     const handleDelete = (id: number) => {
         if (user)

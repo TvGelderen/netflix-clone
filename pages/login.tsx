@@ -27,12 +27,12 @@ const Login: React.FC = () => {
     useEffect(() => {
         const emailParam = router.query.email;
         setEmail(emailParam !== undefined && !(emailParam instanceof Array) ? emailParam : '');
-    }, []);
+    }, [router.query.email]);
 
     useEffect(() => {
         if (user)
             router.push('/');
-    }, [user]);
+    }, [user, router]);
     
     return (
         <div 

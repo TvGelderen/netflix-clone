@@ -43,7 +43,7 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
     useEffect(() => {
         if (savedMovies !== undefined && savedMovies?.find((item: { id: number; }) => item?.id === movie.id))
             setLike(true);
-    }, [savedMovies]);
+    }, [savedMovies, movie.id]);
 
     return (
         <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] inline-block cursor-pointer relative mx-2 rounded">

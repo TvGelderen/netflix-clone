@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
     const [subscriptions, setSubscriptions] = useState<ProductType[]>([]);
     const [currentSubscription, setCurrentSubscription] = useState<SubscriptionType>();
     
-    const { user, logOut } = useAuthContext();
+    const { user, logOut, loading } = useAuthContext();
     const router = useRouter();
 
     const asPrice = (amount: string) => {
@@ -68,27 +68,28 @@ const Profile: React.FC = () => {
 
     // Get current subscription
     useEffect(() => {
-        if (user !== null)
+        if (!loading)
         {
-            const userId = user?.uid ? user.uid : '';
-        
-            const customerRef = doc(db, "customers", userId);
-            const subscriptionRef = collection(customerRef, "subscriptions");
+            if (user !== null)
+            {
+                const userId = user?.uid ? user.uid : '';
+                const customerRef = doc(db, "customers", userId);
+                const subscriptionRef = collection(customerRef, "subscriptions");
 
-
-            getDocs(subscriptionRef)
-                .then(subscriptionSnapshot => {
-                    subscriptionSnapshot.forEach(async (subscription) => {
-                        setCurrentSubscription({
-                            role: subscription.data().role,
-                            current_period_end: subscription.data().current_period_end.seconds,
+                getDocs(subscriptionRef)
+                    .then(subscriptionSnapshot => {
+                        subscriptionSnapshot.forEach(async (subscription) => {
+                            setCurrentSubscription({
+                                role: subscription.data().role,
+                                current_period_end: subscription.data().current_period_end.seconds,
+                            });
                         });
                     });
-                });
+            }
+            else    
+                router.push('/');
         }
-        else
-            router.push('/');
-    }, [user]);
+    }, [user, router, loading]);
 
     // Get subscription plans
     useEffect(() => {
@@ -148,6 +149,9 @@ const Profile: React.FC = () => {
                         />
                     </div>
                     <div className='col-span-5'>
+                        <p className='text-2xl font-semibold pb-1 border-b-2 border-[#202020]'>Email</p>
+                        <p className='mt-2 mb-8'>{user && user.email}</p>
+
                         <p className='text-2xl font-semibold pb-1 border-b-2 border-[#202020]'>Subscription Plans</p>
                         {currentSubscription && <p className='text-[#aaaaaa] py-2'>Renewal date: {(new Date(currentSubscription.current_period_end * 1000)).toLocaleDateString()}</p>}
 

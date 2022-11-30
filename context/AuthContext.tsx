@@ -7,6 +7,7 @@ type authContextType = {
     register: (email: string, password: string) => void;
     signIn: (email: string, password: string) => Promise<UserCredential> | null;
     logOut: () => void;
+    loading: boolean;
 };
 
 const authContextDefaultValues: authContextType = {
@@ -14,12 +15,14 @@ const authContextDefaultValues: authContextType = {
     register: () => { return null },
     signIn: () => { return null },
     logOut: () => {},
+    loading: true,
 };
 
 const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
 export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const register = async (email: string, password: string) => {
         return await createUserWithEmailAndPassword(auth, email, password)
@@ -31,7 +34,10 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     }
 
     useEffect(() => {
-        const updateUser = onAuthStateChanged(auth, currentUser => setUser(currentUser));
+        const updateUser = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            setLoading(false);
+        });
 
         return () => updateUser();
     }, []);
@@ -42,7 +48,8 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
         user,
         register,
         signIn,
-        logOut
+        logOut,
+        loading
     };
 
     return (

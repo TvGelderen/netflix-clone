@@ -41,7 +41,7 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
         axios.get(Requests.fetchMovieGenres.url)
           .then(response => setGenres(response.data.genres))
           .catch(error => console.error(error));
-    }, []);
+    }, [url]);
 
     useEffect(() => {
         const url = `https://api.themoviedb.org/3/movie/${selectedMovie?.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&append_to_response=videos`;
@@ -61,7 +61,7 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
 
         // get all genres applied to current selected movie
         setSelectedMovieGenres(genres?.filter(genre => selectedMovie?.genre_ids?.includes(genre.id)));
-    }, [selectedMovie]);
+    }, [selectedMovie, genres]);
 
     return (
         <div className="mb-6">
