@@ -14,15 +14,16 @@ const Movies: React.FC = () => {
         if (user)
         {
             const userRef = doc(db, "customers", user?.uid);
-            const savedMoviesRef = collection(userRef, "savedMovies")
+            const savedMoviesRef = collection(userRef, "savedMovies");
+
             const unsubscribe = onSnapshot(savedMoviesRef, snapshot => {
                 setSavedMovies([]);
                 
                 snapshot.forEach(movie => {
                     getDoc(doc(savedMoviesRef, movie.id))
-                      .then(response => setSavedMovies(oldList => [...oldList, response.data()]))
-                })
-            })
+                      .then(response => setSavedMovies(oldList => [...oldList, response.data()]));
+                });
+            });
 
             return () => unsubscribe();
         }

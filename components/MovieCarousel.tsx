@@ -17,7 +17,21 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
     const [selectedMovieGenres, setSelectedMovieGenres] = useState<any[]>();
     const [selectedMovieCast, setSelectedMovieCast] = useState<any[]>();
     const [trailerKey, setTrailerKey] = useState<string>();
-
+    
+    const scrollLeft = () => {
+        let slider = document.getElementById(`${title}-slider`);
+        
+        if (slider !== null)
+        slider.scrollLeft = slider.scrollLeft - 800;
+    };
+    
+    const scrollRight = () => {
+        let slider = document.getElementById(`${title}-slider`);
+        
+        if (slider !== null)
+        slider.scrollLeft = slider.scrollLeft + 800;
+    };
+    
     useEffect(() => {
         axios
           .get(url)
@@ -27,21 +41,7 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
         axios.get(Requests.fetchMovieGenres.url)
           .then(response => setGenres(response.data.genres))
           .catch(error => console.error(error));
-    }, [url]);
-
-    const scrollLeft = () => {
-        let slider = document.getElementById(`${title}-slider`);
-        
-        if (slider !== null)
-            slider.scrollLeft = slider.scrollLeft - 800;
-    };
-
-    const scrollRight = () => {
-        let slider = document.getElementById(`${title}-slider`);
-        
-        if (slider !== null)
-            slider.scrollLeft = slider.scrollLeft + 800;
-    };
+    }, []);
 
     useEffect(() => {
         const url = `https://api.themoviedb.org/3/movie/${selectedMovie?.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&append_to_response=videos`;

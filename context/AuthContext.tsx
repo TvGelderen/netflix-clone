@@ -1,7 +1,6 @@
 import React, { useContext, createContext, ReactNode, useState, useEffect } from 'react';
 import { User, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
-import { auth, db } from '../firebase';
-import { addDoc, arrayUnion, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { auth } from '../firebase';
 
 type authContextType = {
     user: User | null;

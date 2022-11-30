@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
-import { collection, doc, onSnapshot, addDoc, getDoc, deleteDoc, query, where } from "firebase/firestore";
+import { collection, doc, onSnapshot, addDoc, deleteDoc, query, where } from "firebase/firestore";
 import Image from "next/image";
 import { useEffect } from "react";
 
@@ -15,11 +15,11 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
             setLike(!like);
 
             const userRef = doc(db, "customers", user.uid);
-            const savedMoviesRef = collection(userRef, "savedMovies")
+            const savedMoviesRef = collection(userRef, "savedMovies");
 
             if (savedMovies?.find((item: { id: number; }) => item.id === movie.id))
             {
-                const movieQuery = query(savedMoviesRef, where("id", "==", movie.id))
+                const movieQuery = query(savedMoviesRef, where("id", "==", movie.id));
 
                 const unsubscribe = onSnapshot(movieQuery, snapshot => {
                     snapshot.forEach(document => {
@@ -48,11 +48,11 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
     return (
         <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] inline-block cursor-pointer relative mx-2 rounded">
             <Image
-                src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
-                alt={movie?.title}
-                width={2560}
-                height={1440}
-                className="w-full h-full object-cover rounded"
+              src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
+              alt={movie?.title}
+              width={2560}
+              height={1440}
+              className="rounded"
             />
             <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center opacity-0 hover:opacity-100 hover:bg-black/70 px-2 rounded">
                 <div className="absolute top-1 left-3" onClick={event => {
