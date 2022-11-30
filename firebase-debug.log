@@ -1,0 +1,72 @@
+[debug] [2022-11-30T07:55:24.033Z] ----------------------------------------------------------------------
+[debug] [2022-11-30T07:55:24.035Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-11-30T07:55:24.035Z] CLI Version:   11.16.1
+[debug] [2022-11-30T07:55:24.035Z] Platform:      win32
+[debug] [2022-11-30T07:55:24.036Z] Node Version:  v16.14.2
+[debug] [2022-11-30T07:55:24.037Z] Time:          Wed Nov 30 2022 08:55:24 GMT+0100 (Midden-Europese standaardtijd)
+[debug] [2022-11-30T07:55:24.037Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-30T07:55:24.095Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-30T07:55:24.096Z] > authorizing via signed-in user (thvangelderen@gmail.com)
+[debug] [2022-11-30T07:55:24.096Z] [iam] checking project netflix-clone-b7491 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-30T07:55:24.098Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions [none]
+[debug] [2022-11-30T07:55:24.098Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions x-goog-quota-user=projects/netflix-clone-b7491
+[debug] [2022-11-30T07:55:24.098Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-30T07:55:24.409Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions 200
+[debug] [2022-11-30T07:55:24.410Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-30T07:55:24.412Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 [none]
+[debug] [2022-11-30T07:55:24.795Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 200
+[debug] [2022-11-30T07:55:24.795Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 {"projectId":"netflix-clone-b7491","projectNumber":"881846064740","displayName":"netflix-clone","name":"projects/netflix-clone-b7491","resources":{"hostingSite":"netflix-clone-b7491"},"state":"ACTIVE","etag":"1_acac65ad-e68a-4f73-a61a-d5707447052f"}
+[debug] [2022-11-30T07:55:27.882Z] defaultcredentials: writing to file C:\Users\Timen\AppData\Roaming\firebase\thvangelderen_gmail_com_application_default_credentials.json
+[debug] [2022-11-30T07:55:27.884Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites pageToken=&pageSize=10
+[debug] [2022-11-30T07:55:28.907Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 200
+[debug] [2022-11-30T07:55:28.907Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites {"sites":[{"name":"projects/netflix-clone-b7491/sites/netflix-clone-b7491","defaultUrl":"https://netflix-clone-b7491.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-30T07:55:28.910Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 
+[debug] [2022-11-30T07:55:29.828Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 200
+[debug] [2022-11-30T07:55:29.829Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites {"sites":[{"name":"projects/netflix-clone-b7491/sites/netflix-clone-b7491","defaultUrl":"https://netflix-clone-b7491.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-30T07:55:29.829Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config [none]
+[debug] [2022-11-30T07:55:30.623Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config 200
+[debug] [2022-11-30T07:55:30.624Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config {"projectId":"netflix-clone-b7491","appId":"1:881846064740:web:3c9a049f704c09b875f171","storageBucket":"netflix-clone-b7491.appspot.com","apiKey":"AIzaSyBUw2uR-rNdRvNq4fxiTrN2Yk3jukBIE6E","authDomain":"netflix-clone-b7491.firebaseapp.com","messagingSenderId":"881846064740"}
+[debug] [2022-11-30T07:56:01.744Z] Error: Command failed: npm.cmd i --omit dev --no-audit
+    at checkExecSyncError (node:child_process:828:11)
+    at execSync (node:child_process:902:15)
+    at prepareFrameworks (C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\index.js:329:42)
+    at async deploy (C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:53:13)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2022-11-30T07:59:10.387Z] ----------------------------------------------------------------------
+[debug] [2022-11-30T07:59:10.389Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-11-30T07:59:10.389Z] CLI Version:   11.16.1
+[debug] [2022-11-30T07:59:10.389Z] Platform:      win32
+[debug] [2022-11-30T07:59:10.389Z] Node Version:  v16.14.2
+[debug] [2022-11-30T07:59:10.390Z] Time:          Wed Nov 30 2022 08:59:10 GMT+0100 (Midden-Europese standaardtijd)
+[debug] [2022-11-30T07:59:10.391Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-30T07:59:10.449Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-30T07:59:10.450Z] > authorizing via signed-in user (thvangelderen@gmail.com)
+[debug] [2022-11-30T07:59:10.450Z] [iam] checking project netflix-clone-b7491 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-30T07:59:10.452Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions [none]
+[debug] [2022-11-30T07:59:10.452Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions x-goog-quota-user=projects/netflix-clone-b7491
+[debug] [2022-11-30T07:59:10.452Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-30T07:59:10.737Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions 200
+[debug] [2022-11-30T07:59:10.737Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/netflix-clone-b7491:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-30T07:59:10.738Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 [none]
+[debug] [2022-11-30T07:59:11.064Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 200
+[debug] [2022-11-30T07:59:11.064Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491 {"projectId":"netflix-clone-b7491","projectNumber":"881846064740","displayName":"netflix-clone","name":"projects/netflix-clone-b7491","resources":{"hostingSite":"netflix-clone-b7491"},"state":"ACTIVE","etag":"1_acac65ad-e68a-4f73-a61a-d5707447052f"}
+[debug] [2022-11-30T07:59:14.254Z] defaultcredentials: writing to file C:\Users\Timen\AppData\Roaming\firebase\thvangelderen_gmail_com_application_default_credentials.json
+[debug] [2022-11-30T07:59:14.257Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites pageToken=&pageSize=10
+[debug] [2022-11-30T07:59:15.224Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 200
+[debug] [2022-11-30T07:59:15.224Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites {"sites":[{"name":"projects/netflix-clone-b7491/sites/netflix-clone-b7491","defaultUrl":"https://netflix-clone-b7491.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-30T07:59:15.225Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 
+[debug] [2022-11-30T07:59:16.142Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites 200
+[debug] [2022-11-30T07:59:16.142Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/netflix-clone-b7491/sites {"sites":[{"name":"projects/netflix-clone-b7491/sites/netflix-clone-b7491","defaultUrl":"https://netflix-clone-b7491.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-11-30T07:59:16.142Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config [none]
+[debug] [2022-11-30T07:59:16.863Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config 200
+[debug] [2022-11-30T07:59:16.864Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/netflix-clone-b7491/webApps/-/config {"projectId":"netflix-clone-b7491","appId":"1:881846064740:web:3c9a049f704c09b875f171","storageBucket":"netflix-clone-b7491.appspot.com","apiKey":"AIzaSyBUw2uR-rNdRvNq4fxiTrN2Yk3jukBIE6E","authDomain":"netflix-clone-b7491.firebaseapp.com","messagingSenderId":"881846064740"}
+[debug] [2022-11-30T07:59:39.920Z] Error: Command failed: npm.cmd i --omit dev --no-audit
+    at checkExecSyncError (node:child_process:828:11)
+    at execSync (node:child_process:902:15)
+    at prepareFrameworks (C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\index.js:329:42)
+    at async deploy (C:\Users\Timen\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:53:13)
+[error] 
+[error] Error: An unexpected error has occurred.

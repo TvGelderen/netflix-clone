@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
-import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where  } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, onSnapshot, query, where  } from 'firebase/firestore';
 import Image from "next/image";
 import Head from "next/head";
 
