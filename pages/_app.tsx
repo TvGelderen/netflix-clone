@@ -6,8 +6,10 @@ import { AuthContextProvider } from '../context/AuthContext';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
-      <Navbar />
-      <Component {...pageProps} />
+      <div className='overflow-x-hidden'>
+        <Navbar />
+        <Component {...pageProps} />
+      </div>
     </AuthContextProvider>
   );
 }

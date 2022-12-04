@@ -15,21 +15,8 @@ const Navbar: React.FC = () => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 40)
-                setSolid(true);
-            else    
-                setSolid(false);    
-        }
-        
-        window.addEventListener('scroll', handleScroll);
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     return (
-        <div className={`z-[9] fixed flex justify-between left-0 top-0 w-full ease-in duration-300 ${solid ? 'bg-black/90' : ''}`}>
+        <div className={`z-[9] absolute flex justify-between left-0 top-0 w-full ease-in duration-300 ${solid ? 'bg-black/90' : ''}`}>
             <div className='flex items-center'>
                 <Link href='/'>
                     <Image

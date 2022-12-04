@@ -16,17 +16,17 @@ const Hero: React.FC = () => {
     }, []);
     
     return (
-        <div className=" w-full h-[75vh] mb">
-            <div className="absolute w-full h-screen bg-gradient-to-t from-black" />
+        <div className="w-full h-[75vh]">
+            <div className="absolute w-full bg-gradient-to-t from-black" />
             <div className="absolute w-full h-screen bg-gradient-to-r from-black" />
             <Image
               src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
               alt={movie?.title}
               width={2560}
               height={1440}
-              className="w-full h-screen object-cover object-center"
+              className="w-full h-[90vh] object-cover object-center"
             />
-            <div className="absolute w-full top-[40%] p-4 md:p-10 2xl:ml-[100px]">
+            <div className="absolute w-full top-[40%] p-4 md:p-10">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">{movie?.title}</h1>
                 <p className="w-full pt-4 sm:max-w-[60%] lg:max-w-[45%] xl:max-w-[35%] 2xl:max-w-[20%] text-gray-100">{movie?.overview.length > 250 
                   ? movie?.overview.substring(0, 240) + "..."
