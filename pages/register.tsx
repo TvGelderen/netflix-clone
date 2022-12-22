@@ -11,7 +11,7 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>();
 
-    const { user, register } = useAuthContext();
+    const { user, register, signIn } = useAuthContext();
 
     const router = useRouter();
 
@@ -21,7 +21,12 @@ const Register: React.FC = () => {
         if (password.length < 6)
             setError("Password must be at least 6 characters.");
 
-        register(email, password);
+        register(email, password)?.then(() => {
+            signIn(email, password)?.catch(error => alert(error.code))
+          })
+          .catch((error) => {
+            alert(error.code)
+          })
     }
 
     useEffect(() => {
