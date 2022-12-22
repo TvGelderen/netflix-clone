@@ -17,8 +17,8 @@ const Hero: React.FC = () => {
     
     return (
         <div className="w-full h-[75vh]">
-            <div className="absolute w-full bg-gradient-to-t from-black" />
-            <div className="absolute w-full h-screen bg-gradient-to-r from-black" />
+            <div className="absolute w-full h-[90vh] bg-gradient-to-t from-black" />
+            <div className="absolute w-full h-[90vh] bg-gradient-to-r from-black" />
             <Image
               src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
               alt={movie?.title}

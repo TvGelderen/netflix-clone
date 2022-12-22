@@ -25,8 +25,11 @@ export const AuthContextProvider = ({ children }: {children: ReactNode}) => {
     const [loading, setLoading] = useState<boolean>(true);
 
     const register = async (email: string, password: string) => {
-        return await createUserWithEmailAndPassword(auth, email, password)
-          .then(() => signInWithEmailAndPassword(auth, email, password));
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(() => signInWithEmailAndPassword(auth, email, password))
+          .catch((error) => {
+            console.log(error)
+          })
     };
 
     const signIn = (email: string, password: string) => {
