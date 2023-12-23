@@ -22,8 +22,8 @@ const Hero: React.FC = () => {
             <Image
               src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
               alt={movie?.title}
-              width={2560}
-              height={1440}
+              width={1920}
+              height={1080}
               className="w-full h-[90vh] object-cover object-center"
             />
             <div className="absolute w-full top-[40%] p-4 md:p-10">

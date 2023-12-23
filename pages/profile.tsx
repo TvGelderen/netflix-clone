@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
 import { db } from '../firebase';
-import { addDoc, collection, doc, DocumentData, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, DocumentData, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { useAuthContext } from '../context/AuthContext';
 import { loadStripe } from '@stripe/stripe-js'
 import { useRouter } from 'next/router';
@@ -29,6 +29,8 @@ const Profile: React.FC = () => {
     
     const { user, logOut, loading } = useAuthContext();
     const router = useRouter();
+
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_API_KEY;
 
     const asPrice = (amount: string) => {
         const str = amount.toString();
@@ -59,7 +61,7 @@ const Profile: React.FC = () => {
 
             if (sessionId)
             {
-                const stripe = await loadStripe("pk_test_51M9OUNFksst1XH2JboDL5HW7wLCOUYvqLdlsoIsQjiF2ZOdWXoJxRqaI0GFimbR6lbLw1GzhPFyLlRgBM4ls6pxv00VFgHBX4o");
+                const stripe = await loadStripe(publishableKey || "");
 
                 stripe?.redirectToCheckout({ sessionId });
             }
@@ -86,8 +88,9 @@ const Profile: React.FC = () => {
                         });
                     });
             }
-            else    
+            else {   
                 router.push('/');
+            }
         }
     }, [user, router, loading]);
 
@@ -168,8 +171,8 @@ const Profile: React.FC = () => {
                                         <div className='flex justify-center items-center'>
                                             <p className='pr-4 text-lg font-semibold'>€{asPrice(subscription.priceData[0].priceData?.unit_amount)}</p>
                                             <button
-                                            className={`w-[180px] py-2 font-semibold rounded ${isCurrentSubscription ? 'bg-[#6a6a6a] cursor-not-allowed' : 'bg-[#e50914]'}`}
-                                            onClick={() => handleCheckout(subscription.productData?.name, subscription.priceData[0].priceId)}
+                                                className={`w-[180px] py-2 font-semibold rounded ${isCurrentSubscription ? 'bg-[#6a6a6a] cursor-not-allowed' : 'bg-[#e50914]'}`}
+                                                onClick={() => handleCheckout(subscription.productData?.name, subscription.priceData[0].priceId)}
                                             >
                                                 {isCurrentSubscription ? "Current subscription" : "Subscribe"}
                                             </button>
@@ -189,4 +192,4 @@ const Profile: React.FC = () => {
     )
 }
 
-export default Profile
+export default Profile;

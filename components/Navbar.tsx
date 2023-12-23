@@ -1,22 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useAuthContext } from '../context/AuthContext';
 
 import { NavData } from './NavData'
 
 const Navbar: React.FC = () => {
-    const [open, setOpen] = useState(false);
-    const [solid, setSolid] = useState(false);
-
-    const { user, logOut } = useAuthContext();
-
     const router = useRouter();
 
     return (
-        <div className={`z-[9] absolute flex justify-between left-0 top-0 w-full ease-in duration-300 ${solid ? 'bg-black/90' : ''}`}>
+        <div className={`z-[9] absolute flex justify-between left-0 top-0 w-full ease-in duration-300`}>
             <div className='flex items-center'>
                 <Link href='/'>
                     <Image
@@ -56,7 +48,7 @@ const Navbar: React.FC = () => {
                       className='w-12 ml-4 py-2 cursor-pointer'
                       onClick={() => router.push('/profile')}
                     />
-                    <div className='absolute flex-col w-[90px] right-0 p-2 bg-black rounded hidden group-hover:flex'>
+                    <div className='absolute flex-col right-0 p-2 bg-black rounded hidden group-hover:flex'>
                         <Link href='/lists' className='m-2 hover:text-[#959595]'>My List</Link>
                         <Link href='/profile' className='m-2 hover:text-[#959595]'>Profile</Link>
                     </div>

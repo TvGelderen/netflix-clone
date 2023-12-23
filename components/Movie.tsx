@@ -29,20 +29,23 @@ const Movie: React.FC<any> = ({ movie, savedMovies }: { movie: any, savedMovies:
 
                 return () => unsubscribe();
             }
-            else
+            else {
                 await addDoc(savedMoviesRef, {
                     id: movie.id,
                     title: movie.title,
                     img: movie.backdrop_path
                 });
+            }
         }
-        else
+        else {
             alert('Please log in to save a movie.');
+        }
     }
 
     useEffect(() => {
-        if (savedMovies !== undefined && savedMovies?.find((item: { id: number; }) => item?.id === movie.id))
+        if (savedMovies !== undefined && savedMovies?.find((item: { id: number; }) => item?.id === movie.id)) {
             setLike(true);
+        }
     }, [savedMovies, movie.id]);
 
     return (
