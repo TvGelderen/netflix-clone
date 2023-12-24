@@ -17,6 +17,6 @@ export const NavData = [
     },
     {
         name: 'My List',
-        path: '/account'
+        path: '/lists'
     }
 ]

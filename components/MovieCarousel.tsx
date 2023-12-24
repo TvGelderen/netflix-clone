@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios"; 
 import Movie from "./Movie";
 import Requests, { getCast } from "../utils/Requests";
@@ -17,6 +17,9 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
     const [selectedMovieGenres, setSelectedMovieGenres] = useState<any[]>();
     const [selectedMovieCast, setSelectedMovieCast] = useState<any[]>();
     const [trailerKey, setTrailerKey] = useState<string>();
+
+    const API_HOST = process.env.NEXT_PUBLIC_MOVIEDB_HOST;
+    const API_KEY = process.env.NEXT_PUBLIC_MOVIEDB_API_KEY;
     
     const scrollLeft = () => {
         let slider = document.getElementById(`${title}-slider`);
@@ -44,7 +47,7 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
     }, [url]);
 
     useEffect(() => {
-        const url = `https://api.themoviedb.org/3/movie/${selectedMovie?.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&append_to_response=videos`;
+        const url = `${API_HOST}/movie/${selectedMovie?.id}?api_key=${API_KEY}&language=en-US&append_to_response=videos`;
 
         if (selectedMovie?.id !== undefined)
         {
@@ -59,7 +62,6 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
               .catch(error => console.error(error));
         }
 
-        // get all genres applied to current selected movie
         setSelectedMovieGenres(genres?.filter(genre => selectedMovie?.genre_ids?.includes(genre.id)));
     }, [selectedMovie, genres]);
 
@@ -88,10 +90,6 @@ const MovieCarousel: React.FC<props> = ({ title, url, savedMovies }: props) => {
                         <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
                     </svg>
                 </div>
-
-                {/* <div className="absolute right-0 top-0 w-1/12 h-full bg-gradient-to-l from-black" />
-                <div className="absolute left-0 top-0 w-1/12 h-full bg-gradient-to-r from-black" /> */}
-
             </div>
 
             {modal && 
